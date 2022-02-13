@@ -1,10 +1,18 @@
 import "../styles/globals.css";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
+
+const theme = extendTheme({
+  colors: {
+    aerolab: {
+      100: "#0AD4FA",
+    },
+  },
+});
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ChakraProvider>
+    <ChakraProvider resetCSS={false} theme={theme}>
       <Component {...pageProps} />
     </ChakraProvider>
   );
