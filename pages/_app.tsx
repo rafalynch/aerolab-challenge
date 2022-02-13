@@ -5,7 +5,7 @@ import type { AppProps } from "next/app";
 const theme = extendTheme({
   colors: {
     aerolab: {
-      100: "#0AD4FA",
+      primary: "#0AD4FA",
     },
   },
 });
