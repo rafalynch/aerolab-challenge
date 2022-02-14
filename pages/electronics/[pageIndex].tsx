@@ -11,6 +11,8 @@ import { selectOrder } from "../../features/orderSlice";
 import { Product } from "../../types";
 import ProductCard from "../../components/ProductCard";
 import SortButton from "../../components/SortButton";
+import NextPage from "../../components/NextPage";
+import PrevPage from "../../components/PrevPage";
 
 const MAX_ITEMS = 16;
 
@@ -24,6 +26,12 @@ function Electronics(props: any) {
   const firstItemIndex = MAX_ITEMS * (Number.parseInt(pageIndex as string) - 1);
 
   const [products, setProducts] = useState([]);
+
+  const hasPrevPage = Number.parseInt(pageIndex as string) > 1;
+  const hasNextPage = !(
+    firstItemIndex + products.length ===
+    props.products.length
+  );
 
   useEffect(() => {
     var productsSorted;
@@ -69,11 +77,17 @@ function Electronics(props: any) {
   return (
     <Box>
       <Stack direction={"row"} justifyContent="space-around">
-        <Link
-          href={"/electronics/" + (Number.parseInt(pageIndex as string) - 1)}
-        >
-          <button>Anterior pagina</button>
-        </Link>
+        {hasPrevPage ? (
+          <Link
+            href={"/electronics/" + (Number.parseInt(pageIndex as string) - 1)}
+          >
+            <a>
+              <PrevPage isDisabled={false} />
+            </a>
+          </Link>
+        ) : (
+          <PrevPage isDisabled={true} />
+        )}
 
         <Box>
           <Link href={"/electronics/1"}>
@@ -101,11 +115,17 @@ function Electronics(props: any) {
             </SortButton>
           </Link>
         </Box>
-        <Link
-          href={"/electronics/" + (Number.parseInt(pageIndex as string) + 1)}
-        >
-          <button>Siguiente pagina</button>
-        </Link>
+        {hasNextPage ? (
+          <Link
+            href={"/electronics/" + (Number.parseInt(pageIndex as string) + 1)}
+          >
+            <a>
+              <NextPage isDisabled={false} />
+            </a>
+          </Link>
+        ) : (
+          <NextPage isDisabled={true} />
+        )}
       </Stack>
       <Text textAlign={"center"}>
         {`${firstItemIndex + products.length} products of 
