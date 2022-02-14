@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { getProducts, getUser } from "../../services/api";
-import { Box, Stack, Text } from "@chakra-ui/react";
+import { Box, Stack, Text, Wrap, WrapItem } from "@chakra-ui/react";
 const orderBy = require("lodash.orderby");
 import { useSelector, useDispatch } from "react-redux";
 
@@ -10,6 +10,7 @@ import { setAsc, setDesc, setDefault } from "../../features/orderSlice";
 import { selectOrder } from "../../features/orderSlice";
 import { Product } from "../../types";
 import ProductCard from "../../components/ProductCard";
+import SortButton from "../../components/SortButton";
 
 const MAX_ITEMS = 16;
 
@@ -26,7 +27,7 @@ function Electronics(props: any) {
 
   useEffect(() => {
     var productsSorted;
-    console.log(order);
+
     switch (order) {
       case "asc": {
         productsSorted = orderBy(props.products, ["cost"], ["asc"]);
@@ -73,15 +74,31 @@ function Electronics(props: any) {
         >
           <button>Anterior pagina</button>
         </Link>
+
         <Box>
           <Link href={"/electronics/1"}>
-            <button onClick={() => handleClick("default")}>Defecto</button>
+            <SortButton
+              isActive={order === "default"}
+              onClick={() => handleClick("default")}
+            >
+              Most recent
+            </SortButton>
           </Link>
           <Link href={"/electronics/1"}>
-            <button onClick={() => handleClick("asc")}>Mas barato</button>
+            <SortButton
+              isActive={order === "asc"}
+              onClick={() => handleClick("asc")}
+            >
+              Lowest price
+            </SortButton>
           </Link>
           <Link href={"/electronics/1"}>
-            <button onClick={() => handleClick("desc")}>Mas caro</button>
+            <SortButton
+              isActive={order === "desc"}
+              onClick={() => handleClick("desc")}
+            >
+              Highest price
+            </SortButton>
           </Link>
         </Box>
         <Link
@@ -94,26 +111,22 @@ function Electronics(props: any) {
         {`${firstItemIndex + products.length} products of 
         ${props.products.length}`}
       </Text>
-      <Box
-        display="flex"
-        flexWrap="wrap"
-        justifyContent="center"
-        gap="25px"
-        margin={"25px"}
-      >
+      <Wrap spacing="30px" justify="center">
         {products.map((product: Product) => {
           return (
-            <ProductCard
-              key={product._id}
-              _id={product._id}
-              name={product.name}
-              category={product.category}
-              cost={product.cost}
-              img={product.img}
-            />
+            <WrapItem>
+              <ProductCard
+                key={product._id}
+                _id={product._id}
+                name={product.name}
+                category={product.category}
+                cost={product.cost}
+                img={product.img}
+              />
+            </WrapItem>
           );
         })}
-      </Box>
+      </Wrap>
     </Box>
   );
 }

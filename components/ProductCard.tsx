@@ -6,8 +6,8 @@ import { Product } from "../types";
 function ProductCard(product: Product) {
   return (
     <Box
-      maxHeight={"300px"}
-      maxWidth="350px"
+      maxHeight={"350px"}
+      maxWidth="300px"
       position={"relative"}
       role="group"
       cursor={"pointer"}
@@ -17,9 +17,9 @@ function ProductCard(product: Product) {
         position="absolute"
         bg="aerolab.primary"
         height="100%"
+        width={"100%"}
         bottom={0}
         opacity={0}
-        width={"100%"}
         transition={"0.1s"}
         _groupHover={{
           opacity: 0.6,
@@ -29,7 +29,6 @@ function ProductCard(product: Product) {
         }}
         color="white"
       />
-
       <Box
         position={"absolute"}
         display={"grid"}
@@ -55,11 +54,11 @@ function ProductCard(product: Product) {
 
       <Box
         padding={"25px"}
-        maxW="300px"
+        w="100%"
         backgroundColor={"white"}
         boxShadow={"rgb(38, 57, 77) 0px 3px 20px -5px"}
       >
-        <Image src={product.img.url} backgroundColor="rgb(0,0,0,0)" w="200px" />
+        <Image src={product.img.url} backgroundColor="rgb(0,0,0,0)" w="100%" />
         <Box>
           <Box>{product.category}</Box>
           <Box
