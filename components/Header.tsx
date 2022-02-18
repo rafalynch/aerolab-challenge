@@ -1,17 +1,27 @@
 import React from "react";
 import Image from "next/image";
 import { Stack, Badge, Text, Box } from "@chakra-ui/react";
+import { useDispatch, useSelector } from "react-redux";
 
-import { User } from "../types";
 import aerolabLogo from "../public/images/aerolab-logo.svg";
 import coin from "../public/icons/coin.svg";
 import headerImg from "../public/images/header-x1.png";
+import { selectUserData } from "../features/userSlice";
+import { postPoints } from "../services/api";
+import { addPoints } from "../features/userSlice";
 
-interface HeaderProps {
-  user: User;
-}
+export default function Header() {
+  const user = useSelector(selectUserData);
+  const dispatch = useDispatch();
 
-export default function Header({ user }: HeaderProps) {
+  async function handleClick() {
+    const res = await postPoints(1000);
+
+    if (res.status === 200) {
+      dispatch(addPoints(1000));
+    }
+  }
+
   return (
     <Stack>
       <Stack direction="row" justifyContent="space-between" padding={6}>
@@ -25,6 +35,7 @@ export default function Header({ user }: HeaderProps) {
             display="flex"
             alignItems={"center"}
             paddingX={5}
+            onClick={handleClick}
           >
             <Text paddingX={1} paddingY={0.1} fontSize={15}>
               {user.points}

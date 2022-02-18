@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { getProducts, getUser } from "../../services/api";
 import { Stack, Text, Divider } from "@chakra-ui/react";
 const orderBy = require("lodash.orderby");
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import { Product, User } from "../../types";
+import { setUserData } from "../../features/userSlice";
 import Header from "../../components/Header";
 import { selectOrder } from "../../features/orderSlice";
 import { selectPageIndex } from "../../features/pageIndexSlice";
@@ -20,6 +21,8 @@ interface ElectronicsProps {
 }
 
 function Electronics(props: ElectronicsProps) {
+  const dispatch = useDispatch();
+
   const [products, setProducts] = useState<Product[]>([]);
 
   const pageIndex = useSelector(selectPageIndex);
@@ -32,6 +35,8 @@ function Electronics(props: ElectronicsProps) {
     firstItemIndex + products.length ===
     props.allProducts.length
   );
+
+  dispatch(setUserData(props.user));
 
   useEffect(() => {
     var productsSorted: Product[];
@@ -59,7 +64,7 @@ function Electronics(props: ElectronicsProps) {
 
   return (
     <>
-      <Header user={props.user} />
+      <Header />
       <Stack
         direction={"row"}
         justifyContent="center"

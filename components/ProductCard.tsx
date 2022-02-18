@@ -1,28 +1,42 @@
 import React from "react";
 import Image from "next/image";
-import { Box, Text, Tag, Image as ImageCh, Stack } from "@chakra-ui/react";
+import { Box, Text, Flex, Badge, Stack } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
 
+import { postRedeem } from "../services/api";
 import { Product } from "../types";
+import { subtractPoints } from "../features/userSlice";
 
-function ProductCard(product: Product) {
+interface ProductCardProps {
+  product: Product;
+  isAffordable: boolean;
+}
+
+function ProductCard({ product, isAffordable }: ProductCardProps) {
+  const dispatch = useDispatch();
+
+  async function redeem() {
+    if (isAffordable) {
+      const redeemRes = await postRedeem(product._id);
+      if (redeemRes.status === 200) {
+        dispatch(subtractPoints(product.cost));
+      }
+    }
+  }
+
   return (
-    <Box
-      height="350px"
-      width="300px"
-      position={"relative"}
-      role="group"
-      cursor={"pointer"}
-    >
+    <Box height="350px" width="300px" position={"relative"} role="group">
       <Box
         display={"block"}
         position="absolute"
-        bg="aerolab.primary"
+        bg={isAffordable ? "aerolab.primary" : "lightgray"}
         height="100%"
         width="100%"
         bottom={0}
         opacity={0}
         transition={"0.1s"}
-        zIndex={3}
+        zIndex={2}
         _groupHover={{
           opacity: 0.6,
           height: "100%",
@@ -34,29 +48,38 @@ function ProductCard(product: Product) {
 
       <Box
         zIndex={3}
+        transition={"0.1s"}
         position={"absolute"}
         display={"grid"}
         textAlign={"center"}
         height="100%"
         width="100%"
+        opacity={0}
         justifyContent={"center"}
         alignContent="center"
         color="white"
-        opacity={0}
-        transition={"0.2s"}
         _groupHover={{
           opacity: 1,
         }}
       >
         <Stack alignItems="center" direction="row" justifyContent="center">
-          <Text fontSize={"4xl"} margin={0} p={0}>
-            {product.cost}
-          </Text>
-          <ImageCh width="40px" height="40px" src={"/icons/coin.svg"}></ImageCh>
+          <Flex gap={2} alignContent="center" alignItems={"end"} padding={2}>
+            <Text fontSize={"4xl"} margin={0} p={0}>
+              {product.cost}
+            </Text>
+            <Image width="45px" height="45px" src={"/icons/coin.svg"}></Image>
+          </Flex>
         </Stack>
-        <Tag borderRadius="full" px="25px" py="5px" bg={"white"}>
-          Reedem now
-        </Tag>
+        <Badge
+          cursor={isAffordable ? "pointer" : "not-allowed"}
+          onClick={redeem}
+          borderRadius="full"
+          px="25px"
+          py="5px"
+          bg={"white"}
+        >
+          {isAffordable ? "Reedem now" : "Not enough points"}
+        </Badge>
       </Box>
 
       <Box

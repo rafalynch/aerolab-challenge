@@ -2,8 +2,10 @@ import React from "react";
 import { Product } from "../types";
 import { Wrap, WrapItem } from "@chakra-ui/react";
 import { motion } from "framer-motion";
+import { useSelector, useDispatch } from "react-redux";
 
 import ProductCard from "./ProductCard";
+import { selectPoints } from "../features/userSlice";
 
 interface ProductsListProps {
   products: Product[];
@@ -11,10 +13,12 @@ interface ProductsListProps {
 
 export default function ProductsList(props: ProductsListProps) {
   const { products } = props;
+  const userPoints = useSelector(selectPoints);
 
   return (
     <Wrap spacing="30px" justify="center">
       {products.map((product: Product) => {
+        const isAffordable = product.cost <= userPoints;
         return (
           <motion.div
             key={product._id}
@@ -30,14 +34,7 @@ export default function ProductsList(props: ProductsListProps) {
             }}
           >
             <WrapItem key={product._id}>
-              <ProductCard
-                key={product._id}
-                _id={product._id}
-                name={product.name}
-                category={product.category}
-                cost={product.cost}
-                img={product.img}
-              />
+              <ProductCard product={product} isAffordable={isAffordable} />
             </WrapItem>
           </motion.div>
         );
