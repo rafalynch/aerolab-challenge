@@ -1,12 +1,13 @@
 import React from "react";
 import Image from "next/image";
-import { Box, Text, Flex, Badge, Stack } from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
+import { Box, Text, Flex, Badge, Stack, Divider, Grid } from "@chakra-ui/react";
+import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 import { postRedeem } from "../services/api";
 import { Product } from "../types";
-import { subtractPoints } from "../features/userSlice";
+import { selectPoints, subtractPoints } from "../features/userSlice";
 
 interface ProductCardProps {
   product: Product;
@@ -15,13 +16,51 @@ interface ProductCardProps {
 
 function ProductCard({ product, isAffordable }: ProductCardProps) {
   const dispatch = useDispatch();
+  const points = useSelector(selectPoints);
+
+  const MySwal = withReactContent(Swal);
 
   async function redeem() {
-    if (isAffordable) {
-      const redeemRes = await postRedeem(product._id);
-      if (redeemRes.status === 200) {
-        dispatch(subtractPoints(product.cost));
-      }
+    if (!isAffordable) {
+      return;
+    }
+    const confirmation = await MySwal.fire({
+      showCancelButton: true,
+      title: product.name,
+      html: (
+        <Box display="grid" justifyContent="center">
+          <Text fontSize="24px">Buy for {product.cost} points?</Text>
+          <Grid w={200} justifySelf="center" gap={4}>
+            <Text margin={0}>{points}</Text>
+            <Text margin={0}>- {product.cost}</Text>
+            <Text margin={0} fontWeight="bold" borderTop="solid 2px">
+              {points - product.cost}
+            </Text>
+          </Grid>
+        </Box>
+      ),
+      icon: "question",
+      confirmButtonColor: "green",
+      cancelButtonColor: "red",
+      confirmButtonText: (
+        <Text margin={0} fontFamily="Raleway">
+          Buy!
+        </Text>
+      ),
+      cancelButtonText: (
+        <Text margin={0} fontFamily="Raleway">
+          Cancel
+        </Text>
+      ),
+    });
+
+    if (!confirmation.value) {
+      return;
+    }
+
+    const redeemRes = await postRedeem(product._id);
+    if (redeemRes.status === 200) {
+      dispatch(subtractPoints(product.cost));
     }
   }
 
