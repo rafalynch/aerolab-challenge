@@ -1,14 +1,11 @@
 import React from "react";
-import { IconButton } from "@chakra-ui/react";
+import { IconButton, IconButtonProps } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 
-interface NextPageProps {
-  isDisabled: boolean;
-}
-
-export default function NextPage(props: NextPageProps) {
+export default function NextPage(props: IconButtonProps) {
   return (
     <IconButton
+      onClick={props.onClick}
       color={"gray"}
       bg="lightgray"
       isDisabled={props.isDisabled}

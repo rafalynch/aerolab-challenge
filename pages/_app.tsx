@@ -3,6 +3,7 @@ import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
 import store from "../store";
+import "@fontsource/raleway/400.css";
 
 const theme = extendTheme({
   colors: {
@@ -10,9 +11,12 @@ const theme = extendTheme({
       primary: "#0AD4FA",
     },
   },
+  fonts: {
+    body: "Raleway",
+  },
 });
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps, router }: AppProps) {
   return (
     <Provider store={store}>
       <ChakraProvider resetCSS={false} theme={theme}>
