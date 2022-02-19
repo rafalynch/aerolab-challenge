@@ -132,7 +132,6 @@ function ProductCard({ product, isAffordable }: ProductCardProps) {
           width={"100%"}
           height={"230px"}
           position={"relative"}
-          padding={"25px"}
           backgroundColor={"white"}
         >
           <Image src={product.img.url} layout={"fill"} objectFit={"contain"} />

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getProducts, getUser } from "../../services/api";
-import { Stack, Text, Divider } from "@chakra-ui/react";
+import { Stack, Text, Divider, Box } from "@chakra-ui/react";
 const orderBy = require("lodash.orderby");
 import { useSelector, useDispatch } from "react-redux";
 
@@ -63,28 +63,28 @@ function Electronics(props: ElectronicsProps) {
   }, [order, pageIndex]);
 
   return (
-    <>
+    <Box>
       <Header />
-      <Stack
-        direction={"row"}
+      <Box
+        display={{ sm: "flex", lg: "grid" }}
+        gridTemplateColumns={{ lg: "2fr 3fr 2fr" }}
         justifyContent="center"
-        alignItems={"center"}
-        margin={6}
-        height={10}
-        spacing={6}
+        justifyItems="center"
+        alignItems="center"
+        alignContent="center"
+        padding={4}
+        gap={4}
       >
-        <Text>
+        <Text textAlign="center">
           {`${firstItemIndex + products.length} products of 
         ${props.allProducts.length}`}
         </Text>
-        <Divider orientation="vertical" />
         <SortingButtons />
-        <Divider orientation="vertical" />
         <PageNav hasPrevPage={hasPrevPage} hasNextPage={hasNextPage} />
-      </Stack>
-      <Divider margin={10} />
+      </Box>
+      <Divider marginY={4} width="80%" />
       <ProductsList products={products} />
-      <Divider margin={10} />
+      <Divider marginY={4} width="80%" />
       <Stack
         direction={"row"}
         justifyContent="center"
@@ -97,10 +97,9 @@ function Electronics(props: ElectronicsProps) {
           {`${firstItemIndex + products.length} products of 
         ${props.allProducts.length}`}
         </Text>
-        <Divider orientation="vertical" />
         <PageNav hasPrevPage={hasPrevPage} hasNextPage={hasNextPage} />
       </Stack>
-    </>
+    </Box>
   );
 }
 

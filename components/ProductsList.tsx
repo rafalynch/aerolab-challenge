@@ -1,6 +1,6 @@
 import React from "react";
 import { Product } from "../types";
-import { Wrap, WrapItem } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -16,7 +16,7 @@ export default function ProductsList(props: ProductsListProps) {
   const userPoints = useSelector(selectPoints);
 
   return (
-    <Wrap spacing="30px" justify="center">
+    <Box display="flex" gap={6} flexWrap="wrap" justifyContent="center">
       {products.map((product: Product) => {
         const isAffordable = product.cost <= userPoints;
         return (
@@ -33,12 +33,12 @@ export default function ProductsList(props: ProductsListProps) {
               },
             }}
           >
-            <WrapItem key={product._id}>
+            <Box>
               <ProductCard product={product} isAffordable={isAffordable} />
-            </WrapItem>
+            </Box>
           </motion.div>
         );
       })}
-    </Wrap>
+    </Box>
   );
 }

@@ -48,9 +48,9 @@ export default function Header() {
         <Image src={headerImg}></Image>
         <Text
           position="absolute"
-          bottom={10}
-          left={20}
-          fontSize={40}
+          bottom="10%"
+          left="10%"
+          fontSize={30}
           color="white"
         >
           Electronics
