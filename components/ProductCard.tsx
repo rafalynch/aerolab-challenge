@@ -101,7 +101,7 @@ function ProductCard({
         _groupHover={{ opacity: 1 }}
       >
         {isAffordable ? (
-          <Image src={buyWhiteIcon} width={50} height={50} />
+          <Image src={buyWhiteIcon} width={50} height={50} alt="buy-icon" />
         ) : (
           <Badge
             textTransform="none"
@@ -114,7 +114,12 @@ function ProductCard({
             backgroundColor="white"
           >
             <Text marginY={1}>You need {pointsMissing}</Text>
-            <Image width="15px" height="15px" src={coinIcon}></Image>
+            <Image
+              width="15px"
+              height="15px"
+              src={coinIcon}
+              alt="coin-icon"
+            ></Image>
           </Badge>
         )}
       </Box>
@@ -140,7 +145,12 @@ function ProductCard({
             <Text fontSize={"4xl"} margin={0} p={0}>
               {product.cost}
             </Text>
-            <Image width="30px" height="30px" src={coinIcon}></Image>
+            <Image
+              width="30px"
+              height="30px"
+              src={coinIcon}
+              alt="coin-icon"
+            ></Image>
           </Flex>
         </Stack>
         <Badge
@@ -170,7 +180,9 @@ function ProductCard({
           transition="0.1s"
           _groupHover={{ opacity: 0 }}
         >
-          {isAffordable && <Image src={buyBlueIcon} width={50} height={50} />}
+          {isAffordable && (
+            <Image src={buyBlueIcon} width={50} height={50} alt="buy-icon" />
+          )}
         </Box>
         <Box
           width={"100%"}
@@ -178,7 +190,12 @@ function ProductCard({
           position={"relative"}
           backgroundColor={"white"}
         >
-          <Image src={product.img.url} layout={"fill"} objectFit={"contain"} />
+          <Image
+            src={product.img.url}
+            layout={"fill"}
+            objectFit={"contain"}
+            alt={product.name}
+          />
         </Box>
 
         <Box>

@@ -60,7 +60,7 @@ function Electronics(props: ElectronicsProps) {
       firstItemIndex + MAX_ITEMS
     );
     setProducts(slicedProducts);
-  }, [order, pageIndex]);
+  }, [order, pageIndex, firstItemIndex, props.allProducts]);
 
   return (
     <Box>

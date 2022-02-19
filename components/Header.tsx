@@ -25,7 +25,7 @@ export default function Header() {
   return (
     <Stack>
       <Stack direction="row" justifyContent="space-between" padding={6}>
-        <Image src={aerolabLogo} height={40} width={40} />
+        <Image src={aerolabLogo} height={40} width={40} alt="aerolab-logo" />
         <Stack direction="row" spacing={2}>
           <Text paddingX={3} fontSize={15}>
             {user.name}
@@ -40,12 +40,12 @@ export default function Header() {
             <Text paddingX={1} paddingY={0.1} fontSize={15}>
               {user.points}
             </Text>
-            <Image width={20} height={20} src={coin}></Image>
+            <Image width={20} height={20} src={coin} alt="coin-icon"></Image>
           </Badge>
         </Stack>
       </Stack>
       <Box position="relative">
-        <Image src={headerImg}></Image>
+        <Image src={headerImg} alt="electronics-header"></Image>
         <Text
           position="absolute"
           bottom="10%"
