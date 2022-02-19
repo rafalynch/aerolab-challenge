@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { Box, Text, Flex, Badge, Stack, Divider, Grid } from "@chakra-ui/react";
+import { Box, Text, Flex, Badge, Stack, Grid } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -8,6 +8,9 @@ import withReactContent from "sweetalert2-react-content";
 import { postRedeem } from "../services/api";
 import { Product } from "../types";
 import { selectPoints, subtractPoints } from "../features/userSlice";
+import buyWhiteIcon from "../public/icons/buy-white.svg";
+import buyBlueIcon from "../public/icons/buy-blue.svg";
+import coinIcon from "../public/icons/coin.svg";
 
 interface ProductCardProps {
   product: Product;
@@ -84,6 +87,18 @@ function ProductCard({ product, isAffordable }: ProductCardProps) {
         }}
         color="white"
       />
+      {isAffordable && (
+        <Box
+          position="absolute"
+          top={4}
+          right={4}
+          opacity={0}
+          zIndex={3}
+          _groupHover={{ opacity: 1 }}
+        >
+          <Image src={buyWhiteIcon} width={50} height={50} />
+        </Box>
+      )}
 
       <Box
         zIndex={3}
@@ -102,11 +117,11 @@ function ProductCard({ product, isAffordable }: ProductCardProps) {
         }}
       >
         <Stack alignItems="center" direction="row" justifyContent="center">
-          <Flex gap={2} alignContent="center" alignItems={"end"} padding={2}>
+          <Flex gap={1} alignContent="center" alignItems={"center"} padding={2}>
             <Text fontSize={"4xl"} margin={0} p={0}>
               {product.cost}
             </Text>
-            <Image width="45px" height="45px" src={"/icons/coin.svg"}></Image>
+            <Image width="30px" height="30px" src={coinIcon}></Image>
           </Flex>
         </Stack>
         <Badge
@@ -128,6 +143,17 @@ function ProductCard({ product, isAffordable }: ProductCardProps) {
         backgroundColor={"white"}
         boxShadow={"rgb(38, 57, 77) 0px 3px 20px -5px"}
       >
+        {isAffordable && (
+          <Box
+            position="absolute"
+            top={4}
+            right={4}
+            zIndex={3}
+            _groupHover={{ opacity: 0 }}
+          >
+            <Image src={buyBlueIcon} width={50} height={50} />
+          </Box>
+        )}
         <Box
           width={"100%"}
           height={"230px"}
