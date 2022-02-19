@@ -15,9 +15,14 @@ import coinIcon from "../public/icons/coin.svg";
 interface ProductCardProps {
   product: Product;
   isAffordable: boolean;
+  pointsMissing: number;
 }
 
-function ProductCard({ product, isAffordable }: ProductCardProps) {
+function ProductCard({
+  product,
+  isAffordable,
+  pointsMissing,
+}: ProductCardProps) {
   const dispatch = useDispatch();
   const points = useSelector(selectPoints);
 
@@ -87,18 +92,32 @@ function ProductCard({ product, isAffordable }: ProductCardProps) {
         }}
         color="white"
       />
-      {isAffordable && (
-        <Box
-          position="absolute"
-          top={4}
-          right={4}
-          opacity={0}
-          zIndex={3}
-          _groupHover={{ opacity: 1 }}
-        >
+      <Box
+        position="absolute"
+        top={4}
+        right={4}
+        opacity={0}
+        zIndex={3}
+        _groupHover={{ opacity: 1 }}
+      >
+        {isAffordable ? (
           <Image src={buyWhiteIcon} width={50} height={50} />
-        </Box>
-      )}
+        ) : (
+          <Badge
+            textTransform="none"
+            rounded="full"
+            gap={1}
+            display="flex"
+            alignItems="center"
+            paddingX={3}
+            paddingY="0"
+            backgroundColor="white"
+          >
+            <Text marginY={1}>You need {pointsMissing}</Text>
+            <Image width="15px" height="15px" src={coinIcon}></Image>
+          </Badge>
+        )}
+      </Box>
 
       <Box
         zIndex={3}
@@ -143,17 +162,16 @@ function ProductCard({ product, isAffordable }: ProductCardProps) {
         backgroundColor={"white"}
         boxShadow={"rgb(38, 57, 77) 0px 3px 20px -5px"}
       >
-        {isAffordable && (
-          <Box
-            position="absolute"
-            top={4}
-            right={4}
-            zIndex={3}
-            _groupHover={{ opacity: 0 }}
-          >
-            <Image src={buyBlueIcon} width={50} height={50} />
-          </Box>
-        )}
+        <Box
+          position="absolute"
+          top={4}
+          right={4}
+          zIndex={3}
+          transition="0.1s"
+          _groupHover={{ opacity: 0 }}
+        >
+          {isAffordable && <Image src={buyBlueIcon} width={50} height={50} />}
+        </Box>
         <Box
           width={"100%"}
           height={"230px"}

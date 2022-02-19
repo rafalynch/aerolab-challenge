@@ -19,6 +19,7 @@ export default function ProductsList(props: ProductsListProps) {
     <Box display="flex" gap={6} flexWrap="wrap" justifyContent="center">
       {products.map((product: Product) => {
         const isAffordable = product.cost <= userPoints;
+        const pointsMissing = product.cost - userPoints;
         return (
           <motion.div
             key={product._id}
@@ -34,7 +35,11 @@ export default function ProductsList(props: ProductsListProps) {
             }}
           >
             <Box>
-              <ProductCard product={product} isAffordable={isAffordable} />
+              <ProductCard
+                pointsMissing={pointsMissing}
+                product={product}
+                isAffordable={isAffordable}
+              />
             </Box>
           </motion.div>
         );

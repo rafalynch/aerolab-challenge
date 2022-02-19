@@ -50,7 +50,7 @@ export default function Header() {
           position="absolute"
           bottom="10%"
           left="10%"
-          fontSize={30}
+          fontSize={{ sm: 30, md: 40, lg: 60 }}
           color="white"
         >
           Electronics
