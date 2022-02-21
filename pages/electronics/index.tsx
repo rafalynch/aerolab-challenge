@@ -3,6 +3,7 @@ import { getProducts, getUser } from "../../services/api";
 import { Stack, Text, Divider, Box } from "@chakra-ui/react";
 const orderBy = require("lodash.orderby");
 import { useSelector, useDispatch } from "react-redux";
+import Head from "next/head";
 
 import { Product, User } from "../../types";
 import { setUserData } from "../../features/userSlice";
@@ -64,6 +65,9 @@ function Electronics(props: ElectronicsProps) {
 
   return (
     <Box>
+      <Head>
+        <title>Aerolab | Electronics</title>
+      </Head>
       <Header />
       <Box
         display={{ sm: "flex", lg: "grid" }}
