@@ -31,6 +31,18 @@ export async function getUser() {
   }
 }
 
+export async function getHistory() {
+  try {
+    const res = await fetch(API_BASE_URL + "/user/history", {
+      headers: defaultHeader,
+    });
+    const history = await res.json();
+    return history;
+  } catch (err) {
+    return err;
+  }
+}
+
 export async function postRedeem(productId: string): Promise<Response> {
   const res = await fetch(API_BASE_URL + "/redeem", {
     method: "POST",

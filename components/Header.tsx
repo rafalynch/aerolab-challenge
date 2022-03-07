@@ -6,12 +6,14 @@ import { useDispatch, useSelector } from "react-redux";
 import aerolabLogo from "../public/images/aerolab-logo.svg";
 import coin from "../public/icons/coin.svg";
 import headerImg from "../public/images/header-x1.png";
-import { selectUserData } from "../features/userSlice";
+import { selectUserData, selectHistory } from "../features/userSlice";
 import { postPoints } from "../services/api";
 import { addPoints } from "../features/userSlice";
+import HistoryPopover from "./HistoryPopover";
 
 export default function Header() {
   const user = useSelector(selectUserData);
+  const history = useSelector(selectHistory);
   const dispatch = useDispatch();
 
   async function handleClick() {
@@ -36,12 +38,14 @@ export default function Header() {
             alignItems={"center"}
             paddingX={5}
             onClick={handleClick}
+            cursor="pointer"
           >
             <Text paddingX={1} paddingY={0.1} fontSize={15}>
               {user.points}
             </Text>
             <Image width={20} height={20} src={coin} alt="coin-icon"></Image>
           </Badge>
+          <HistoryPopover history={history}></HistoryPopover>
         </Stack>
       </Stack>
       <Box position="relative">
