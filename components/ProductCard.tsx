@@ -5,13 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
-import { getHistory, postRedeem } from "../services/api";
+import { getHistory, getUser, postRedeem } from "../services/api";
 import { Product } from "../types";
-import {
-  selectPoints,
-  setHistory,
-  subtractPoints,
-} from "../features/userSlice";
+import { selectPoints, setHistory, setUserData } from "../features/userSlice";
 import buyWhiteIcon from "../public/icons/buy-white.svg";
 import buyBlueIcon from "../public/icons/buy-blue.svg";
 import coinIcon from "../public/icons/coin.svg";
@@ -72,7 +68,9 @@ function ProductCard({
 
     const redeemRes = await postRedeem(product._id);
     if (redeemRes.status === 200) {
-      dispatch(subtractPoints(product.cost));
+      getUser().then((user) => {
+        dispatch(setUserData(user));
+      });
 
       getHistory().then((history) => {
         dispatch(setHistory(history));

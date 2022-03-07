@@ -5,7 +5,8 @@ import { motion } from "framer-motion";
 import { useSelector, useDispatch } from "react-redux";
 
 import ProductCard from "./ProductCard";
-import { selectPoints } from "../features/userSlice";
+import { selectPoints, setUserData } from "../features/userSlice";
+import { getUser } from "../services/api";
 
 interface ProductsListProps {
   products: Product[];
@@ -13,6 +14,11 @@ interface ProductsListProps {
 
 export default function ProductsList(props: ProductsListProps) {
   const { products } = props;
+  const dispatch = useDispatch();
+  const user = getUser().then((user) => {
+    dispatch(setUserData(user));
+  });
+
   const userPoints = useSelector(selectPoints);
 
   return (

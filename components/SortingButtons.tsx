@@ -1,8 +1,6 @@
 import React from "react";
-import { Flex, Box } from "@chakra-ui/react";
-import Link from "next/link";
+import { Box } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
-import { useRouter } from "next/router";
 
 import { setDesc, setAsc, setDefault } from "../features/orderSlice";
 import { initPage } from "../features/pageIndexSlice";

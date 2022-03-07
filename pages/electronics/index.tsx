@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { getHistory, getProducts, getUser } from "../../services/api";
+import { getHistory, getProducts } from "../../services/api";
 import { Stack, Text, Divider, Box } from "@chakra-ui/react";
 const orderBy = require("lodash.orderby");
 import { useSelector, useDispatch } from "react-redux";
 import Head from "next/head";
 
-import { Product, User } from "../../types";
-import { setHistory, setUserData } from "../../features/userSlice";
+import { Product } from "../../types";
+import { setHistory } from "../../features/userSlice";
 import Header from "../../components/Header";
 import { selectOrder } from "../../features/orderSlice";
 import { selectPageIndex } from "../../features/pageIndexSlice";
@@ -18,7 +18,6 @@ const MAX_ITEMS = 16;
 
 interface ElectronicsProps {
   allProducts: Product[];
-  user: User;
   history: Product[];
 }
 
@@ -38,7 +37,6 @@ function Electronics(props: ElectronicsProps) {
     props.allProducts.length
   );
 
-  dispatch(setUserData(props.user));
   dispatch(setHistory(props.history));
 
   useEffect(() => {
@@ -111,11 +109,10 @@ function Electronics(props: ElectronicsProps) {
 
 export async function getServerSideProps() {
   const allProducts = await getProducts();
-  const user = await getUser();
   const history = await getHistory();
 
   return {
-    props: { allProducts, user, history },
+    props: { allProducts, history },
   };
 }
 

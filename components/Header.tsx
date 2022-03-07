@@ -6,13 +6,18 @@ import { useDispatch, useSelector } from "react-redux";
 import aerolabLogo from "../public/images/aerolab-logo.svg";
 import coin from "../public/icons/coin.svg";
 import headerImg from "../public/images/header-x1.png";
-import { selectUserData, selectHistory } from "../features/userSlice";
-import { postPoints } from "../services/api";
-import { addPoints } from "../features/userSlice";
+import {
+  selectUserData,
+  selectHistory,
+  setUserData,
+  selectPoints,
+} from "../features/userSlice";
+import { getUser, postPoints } from "../services/api";
 import HistoryPopover from "./HistoryPopover";
 
 export default function Header() {
   const user = useSelector(selectUserData);
+  const points = useSelector(selectPoints);
   const history = useSelector(selectHistory);
   const dispatch = useDispatch();
 
@@ -20,7 +25,9 @@ export default function Header() {
     const res = await postPoints(1000);
 
     if (res.status === 200) {
-      dispatch(addPoints(1000));
+      getUser().then((user) => {
+        dispatch(setUserData(user));
+      });
     }
   }
 
@@ -41,7 +48,7 @@ export default function Header() {
             cursor="pointer"
           >
             <Text paddingX={1} paddingY={0.1} fontSize={15}>
-              {user.points}
+              {points}
             </Text>
             <Image width={20} height={20} src={coin} alt="coin-icon"></Image>
           </Badge>
