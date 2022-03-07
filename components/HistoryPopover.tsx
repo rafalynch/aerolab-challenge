@@ -18,6 +18,7 @@ import Image from "next/image";
 
 import { Product } from "../types";
 import histoyIcon from "../public/icons/history.png";
+import coinIcon from "../public/icons/coin.svg";
 
 interface HistoryPopoverProps {
   history: Product[];
@@ -64,9 +65,16 @@ export default function HistoryPopover({ history }: HistoryPopoverProps) {
                     ></Image>
                     <Grid textAlign={"right"}>
                       <Text margin={0}>{product.name}</Text>
-                      <Text fontWeight={"bold"} margin={0}>
-                        {"$" + product.cost}
-                      </Text>
+                      <Flex justifyContent={"end"}>
+                        <Text fontWeight={"bold"} margin={0}>
+                          {product.cost}
+                        </Text>
+                        <Image
+                          width={"10px"}
+                          height={"10px"}
+                          src={coinIcon}
+                        ></Image>
+                      </Flex>
                     </Grid>
                   </Flex>
                   <Divider></Divider>
